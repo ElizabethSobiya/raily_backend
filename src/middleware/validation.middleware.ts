@@ -19,7 +19,7 @@ export function validateBody<T extends ZodSchema>(schema: T) {
             success: false,
             error: "Validation failed",
             code: "VALIDATION_ERROR",
-            details: error.errors.map((e) => ({
+            details: (error as ZodError).errors.map((e) => ({
               field: e.path.join("."),
               message: e.message,
             })),
@@ -61,7 +61,7 @@ export function validateQuery<T extends ZodSchema>(schema: T) {
             success: false,
             error: "Invalid query parameters",
             code: "VALIDATION_ERROR",
-            details: error.errors.map((e) => ({
+            details: (error as ZodError).errors.map((e) => ({
               field: e.path.join("."),
               message: e.message,
             })),
@@ -92,7 +92,7 @@ export function validateParams<T extends ZodSchema>(schema: T) {
             success: false,
             error: "Invalid URL parameters",
             code: "VALIDATION_ERROR",
-            details: error.errors.map((e) => ({
+            details: (error as ZodError).errors.map((e) => ({
               field: e.path.join("."),
               message: e.message,
             })),
