@@ -1,14 +1,18 @@
 import { cors } from "hono/cors";
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || [
   "http://localhost:19006",
   "http://localhost:3000",
-  "exp://192.168.*.*:19000",
+  "http://192.168.*.*:*",
+  "exp://192.168.*.*:*",
 ];
 
 export const corsConfig = cors({
   origin: (origin) => {
-    if (!origin) return "*";
+    // In development, allow all origins (for mobile app testing)
+    if (isDevelopment || !origin) return "*";
 
     // Check if origin matches any allowed origin
     const isAllowed = allowedOrigins.some((allowed) => {
